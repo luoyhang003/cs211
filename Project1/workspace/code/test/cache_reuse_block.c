@@ -22,7 +22,7 @@
 #include "time.h"
 
 int main(int argc, char *argv[]) {
-        int n = 100;
+        int n = 2000;
         printf("******  n=%d    *******\n", n);
 
         double *a = NULL;

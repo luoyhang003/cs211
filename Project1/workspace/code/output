@@ -1,0 +1,41 @@
+The running time of dgemm0 with n=64 is 0.000000s
+The running time of dgemm1 with n=64 is 0.000000s
+err:0.000000
+The running time of dgemm2 with n=64 is 0.000000s
+The running time of dgemm3 with n=64 is 0.000000s
+err:0.000000
+
+The running time of dgemm0 with n=128 is 0.040000s
+The running time of dgemm1 with n=128 is 0.020000s
+err:0.000000
+The running time of dgemm2 with n=128 is 0.020000s
+The running time of dgemm3 with n=128 is 0.010000s
+err:0.000000
+
+The running time of dgemm0 with n=256 is 0.370000s
+The running time of dgemm1 with n=256 is 0.230000s
+err:0.000000
+The running time of dgemm2 with n=256 is 0.180000s
+The running time of dgemm3 with n=256 is 0.080000s
+err:0.000000
+
+The running time of dgemm0 with n=512 is 3.950000s
+The running time of dgemm1 with n=512 is 2.730000s
+err:0.000000
+The running time of dgemm2 with n=512 is 1.990000s
+The running time of dgemm3 with n=512 is 1.030000s
+err:0.000000
+
+The running time of dgemm0 with n=1024 is 34.190000s
+The running time of dgemm1 with n=1024 is 24.100000s
+err:0.000000
+The running time of dgemm2 with n=1024 is 19.050000s
+The running time of dgemm3 with n=1024 is 9.970000s
+err:0.000000
+
+The running time of dgemm0 with n=2048 is 548.450000s
+The running time of dgemm1 with n=2048 is 351.630000s
+err:0.000000
+The running time of dgemm2 with n=2048 is 205.100000s
+The running time of dgemm3 with n=2048 is 122.040000s
+err:0.000000
