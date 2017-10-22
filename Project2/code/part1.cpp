@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
                 double* B = (double*)calloc(sizeof(double), N);
 
                 for(int i = 0; i < N; i++) {
-                  B[i] = 1;
+                        B[i] = 1;
                 }
 
                 char SIDE = 'L';
@@ -62,7 +62,7 @@ int main(int argc, char* argv[]) {
                 }
 
                 for(int index = 0; index < N; index++) {
-                  b[index] = min + (rand()/div);
+                        b[index] = min + (rand()/div);
                 }
 
 
@@ -80,35 +80,36 @@ int main(int argc, char* argv[]) {
                 //         printf("\n");
                 // }
 
-                clock_t start, end;
+                struct timespec start, end;
                 double running;
 
-                start=clock();
+                clock_gettime(CLOCK_MONOTONIC, &start);
 
                 int n = mydgetrf(A, 3, pvt);
                 n = mydtrsm(N, A, pvt, b, x);
 
-                end = clock();
+                clock_gettime(CLOCK_MONOTONIC, &end);
 
-                running = (double)(end - start)/1000000.0;
+                running = 1000000000L * (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec);
 
-                printf("MY Running: %f\n", running);
+                printf("MY Running: %f nonoseconds.\n", running);
                 // printf("Error: %d\n", n);
 
-                // for(int i = 0; i < N; i++) {
-                //         for(int j = 0; j < N; j++) {
-                //                 printf("%f ",A[i*N+j]);
-                //         }
-                //         printf("\n");
-                // }
-                //
-                // for(int j = 0; j < N; j++) {
-                //         printf("%f ",pvt[j]);
-                // }
+                for(int i = 0; i < N; i++) {
+                        for(int j = 0; j < N; j++) {
+                                printf("%f ",A[i*N+j]);
+                        }
+                        printf("\n");
+                }
 
-                start=clock();
+                for(int j = 0; j < N; j++) {
+                        printf("%f ",pvt[j]);
+                }
+                ================
 
-                // LU factorization
+                clock_gettime(CLOCK_MONOTONIC, &start);
+
+// LU factorization
                 LAPACK_dgetrf(&N,&N,A1,&LDA,IPIV,&INFO);
 
                 for(int i = 0; i < N; i++)
@@ -118,18 +119,18 @@ int main(int argc, char* argv[]) {
                         B[i] = tmp;
                 }
 
-                // forward  L(Ux) = B => y = Ux
+// forward  L(Ux) = B => y = Ux
                 dtrsm_(&SIDE,&UPLO,&TRANS,&DIAG,&N,&M,&a,A1, &N, B, &N);
                 UPLO = 'U';
                 DIAG = 'N';
-                // backward Ux = y
+// backward Ux = y
                 dtrsm_(&SIDE,&UPLO,&TRANS,&DIAG,&N,&M,&a,A1, &N, B, &N);
 
-                end = clock();
+                clock_gettime(CLOCK_MONOTONIC, &end);
 
-                running = (double)(end - start)/1000000.0;
+                running = 1000000000L * (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec);
 
-                printf("LAPACK Running: %f\n", running);
+                printf("LAPACK Running: %f nonoseconds.\n", running);
 
 
         }else {
@@ -197,26 +198,26 @@ int mydgetrf(double* m, int N, int *pvt) {
 }
 
 int mydtrsm(int N, double* A, int* pvt, double* b, double* x) {
-  //forward substitution.
-  double* y = (double*)calloc(sizeof(double), N);
-  y[1] = b[pvt[1]];
-  for(int i = 1; i < N; i++) {
-    double sum = 0.0;
-    for(int j = 0; j < i-1; j++) {
-      sum += y[j] * A[j*N+j];
-    }
-    y[i] = b[pvt[i]] - sum;
-  }
-  //back substitution.
-  x[N-1] = y[N-1]/A[N*N-1];
-  for(int i = N-2; i >= 0; i--) {
-    double sum = 0.0;
-    for(int j = i+1; j < N; j++) {
-      sum += x[j]*A[i*N+j];
-    }
-    x[i] = (y[i] - sum)/A[i*N+i];
-  }
+        //forward substitution.
+        double* y = (double*)calloc(sizeof(double), N);
+        y[1] = b[pvt[1]];
+        for(int i = 1; i < N; i++) {
+                double sum = 0.0;
+                for(int j = 0; j < i-1; j++) {
+                        sum += y[j] * A[j*N+j];
+                }
+                y[i] = b[pvt[i]] - sum;
+        }
+        //back substitution.
+        x[N-1] = y[N-1]/A[N*N-1];
+        for(int i = N-2; i >= 0; i--) {
+                double sum = 0.0;
+                for(int j = i+1; j < N; j++) {
+                        sum += x[j]*A[i*N+j];
+                }
+                x[i] = (y[i] - sum)/A[i*N+i];
+        }
 
-  return 0;
+        return 0;
 
 }
