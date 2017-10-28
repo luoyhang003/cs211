@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
                 int LDB = N;
                 // N = 3;
                 int NRHS = 1;
-                int IPIV[N];
+                int *IPIV = (int *)calloc(sizeof(int), N);
 
                 double* B = (double*)calloc(sizeof(double), N);
 
@@ -86,31 +86,37 @@ int main(int argc, char* argv[]) {
                 clock_gettime(CLOCK_MONOTONIC, &start);
 
                 int n = mydgetrf(A, 3, pvt);
-                n = mydtrsm(N, A, pvt, b, x);
 
                 clock_gettime(CLOCK_MONOTONIC, &end);
+
+
 
                 running = 1000000000L * (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec);
 
                 printf("MY Running: %f nonoseconds.\n", running);
                 // printf("Error: %d\n", n);
 
-                for(int i = 0; i < N; i++) {
-                        for(int j = 0; j < N; j++) {
-                                printf("%f ",A[i*N+j]);
-                        }
-                        printf("\n");
-                }
-
-                for(int j = 0; j < N; j++) {
-                        printf("%f ",pvt[j]);
-                }
-                ================
+                // for(int i = 0; i < N; i++) {
+                //         for(int j = 0; j < N; j++) {
+                //                 printf("%f ",A[i*N+j]);
+                //         }
+                //         printf("\n");
+                // }
+                //
+                // for(int j = 0; j < N; j++) {
+                //         printf("%f ",pvt[j]);
+                // }
 
                 clock_gettime(CLOCK_MONOTONIC, &start);
 
 // LU factorization
                 LAPACK_dgetrf(&N,&N,A1,&LDA,IPIV,&INFO);
+
+                clock_gettime(CLOCK_MONOTONIC, &end);
+
+                running = 1000000000L * (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec);
+
+                printf("LAPACK Running: %f nonoseconds.\n", running);
 
                 for(int i = 0; i < N; i++)
                 {
@@ -125,13 +131,6 @@ int main(int argc, char* argv[]) {
                 DIAG = 'N';
 // backward Ux = y
                 dtrsm_(&SIDE,&UPLO,&TRANS,&DIAG,&N,&M,&a,A1, &N, B, &N);
-
-                clock_gettime(CLOCK_MONOTONIC, &end);
-
-                running = 1000000000L * (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec);
-
-                printf("LAPACK Running: %f nonoseconds.\n", running);
-
 
         }else {
                 printf("Please input the size of the MATRIX.\n");

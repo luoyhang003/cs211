@@ -1,0 +1,19 @@
+n = 1000
+MY Running: 7421881.000000 nonoseconds.
+LAPACK Running: 388736032.000000 nonoseconds.
+
+n = 2000
+MY Running: 29021073.000000 nonoseconds.
+LAPACK Running: 3321139705.000000 nonoseconds.
+
+n = 3000
+MY Running: 65417925.000000 nonoseconds.
+LAPACK Running: 11404346154.000000 nonoseconds.
+
+n = 4000
+MY Running: 116781677.000000 nonoseconds.
+LAPACK Running: 27204392489.000000 nonoseconds.
+
+n = 5000
+MY Running: 183158075.000000 nonoseconds.
+LAPACK Running: 59666708067.000000 nonoseconds.
