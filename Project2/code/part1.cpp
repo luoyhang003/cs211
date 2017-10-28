@@ -3,8 +3,8 @@
 #include "math.h"
 #include <time.h>
 #include <string.h>
-//#include "lapacke.h"
-//#include "blas.h"
+#include "lapacke.h"
+#include "blas.h"
 
 // using namespace std;
 
