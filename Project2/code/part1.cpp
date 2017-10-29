@@ -131,6 +131,12 @@ int main(int argc, char* argv[]) {
                 printf("LAPACK Running: %.6f seconds.\n", running);
                 printf("LAPACK GFLOPS: %f\n", gflops);
 
+                trans = transpose(A1, N);
+
+                double e = err(A, A1, N);
+
+                printf("err: %f\n", e);
+
                 for(int i = 0; i < N; i++)
                 {
                         double tmp = B[IPIV[i]-1];

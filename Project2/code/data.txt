@@ -17,3 +17,5 @@ LAPACK Running: 27204392489.000000 nonoseconds.
 n = 5000
 MY Running: 183158075.000000 nonoseconds.
 LAPACK Running: 59666708067.000000 nonoseconds.
+
+=========================================
