@@ -8,7 +8,7 @@
 
 // using namespace std;
 
-int mydgetrf(double* m, int N, int* pvt, int* tempv);
+int mydgetrf(double* m, int N, int* pvt, double* tempv);
 int mydtrsm(int N, double* A, int* pvt, double* b, double* x, double* y);
 int transpose(double *a, int N);
 
