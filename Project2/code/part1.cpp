@@ -116,6 +116,8 @@ int main(int argc, char* argv[]) {
                 //         printf("%f ",pvt[j]);
                 // }
 
+                int trans = transpose(A1, N);
+
                 clock_gettime(CLOCK_MONOTONIC, &start);
 
                 // LU factorization
@@ -185,10 +187,6 @@ int mydgetrf(double* m, int N, int *pvt, double* tempv) {
                                 }
                         }
                 }
-
-
-
-
 
         }
         return 0;
