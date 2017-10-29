@@ -100,7 +100,7 @@ int main(int argc, char* argv[]) {
 
                 running = ((double)end.tv_sec + 1.0e-9*end.tv_nsec) -
                           ((double)start.tv_sec + 1.0e-9*start.tv_nsec);
-                gflops = (2*pow(n,3))/(3*time*pow(10,9));
+                gflops = (2*powf(n,3))/(3*time*powf(10,9));
                 printf("MY Running: %.6f seconds.\n", running);
                 printf("MY GFLOPS: %f\n", gflops);
                 // printf("Error: %d\n", n);
@@ -125,7 +125,7 @@ int main(int argc, char* argv[]) {
 
                 running = ((double)end.tv_sec + 1.0e-9*end.tv_nsec) -
                           ((double)start.tv_sec + 1.0e-9*start.tv_nsec);
-                gflops = (2*pow(n,3))/(3*time*pow(10,9));
+                gflops = (2*powf(n,3))/(3*time*powf(10,9));
                 printf("MY Running: %.6f seconds.\n", running);
                 printf("MY GFLOPS: %f\n", gflops);
 
