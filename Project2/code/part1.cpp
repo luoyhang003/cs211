@@ -11,6 +11,7 @@
 int mydgetrf(double* m, int N, int* pvt, double* tempv);
 int mydtrsm(int N, double* A, int* pvt, double* b, double* x, double* y);
 int transpose(double *a, int N);
+double err(double *a, double *b, int n);
 
 int main(int argc, char* argv[]) {
         if(argc > 1) {
