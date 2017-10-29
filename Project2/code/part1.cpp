@@ -125,9 +125,9 @@ int main(int argc, char* argv[]) {
 
                 running = ((double)end.tv_sec + 1.0e-9*end.tv_nsec) -
                           ((double)start.tv_sec + 1.0e-9*start.tv_nsec);
-                gflops = (2.0*powf(N,3.0))/(3.0*running*powf(10,9));
-                printf("MY Running: %.6f seconds.\n", running);
-                printf("MY GFLOPS: %f\n", gflops);
+                gflops = (2.0*powf(N,3.0))/(3.0*running*powf(10.0,9.0));
+                printf("LAPACK Running: %.6f seconds.\n", running);
+                printf("LAPACK GFLOPS: %f\n", gflops);
 
                 for(int i = 0; i < N; i++)
                 {
