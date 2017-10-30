@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "stdlib.h"
-#include "math.h"
+#include <stdlib.h>
+#include <math.h>
 #include <time.h>
 #include <string.h>
 #include "lapacke.h"
@@ -9,9 +9,12 @@
 // using namespace std;
 
 int mydgetrf(double* m, int N, int* pvt, double* tempv);
-int mydtrsm(int N, double* A, int* pvt, double* b, double* x, double* y);
+//int mydtrsm(int N, double* A, int* pvt, double* b, double* x, double* y);
 int transpose(double *a, int N);
 double err(double *a, double *b, int n);
+int mydtrsm_forward(int N, double* A, int* pvt, double* b, double* x, double *y);
+int mydtrsm_back(int N, double* A, int* pvt, double* b, double* x, double* y);
+
 
 int main(int argc, char* argv[]) {
         if(argc > 1) {
@@ -245,7 +248,7 @@ double err(double *a, double *b, int n){
                                 error = abs(a[i*n+j]-b[i*n+j]);
                 }
         }
-        printf("Error = %f\n",error);
+        //printf("Error = %f\n",error);
 }
 
 int transpose(double *a, int N) {

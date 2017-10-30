@@ -1,21 +1,35 @@
-n = 1000
-MY Running: 7421881.000000 nonoseconds.
-LAPACK Running: 388736032.000000 nonoseconds.
+N=1000
+MY Running: 4.337413 seconds.
+MY GFLOPS: 0.153701
+LAPACK Running: 0.402123 seconds.
+LAPACK GFLOPS: 1.657866
+err: 0.000000
 
-n = 2000
-MY Running: 29021073.000000 nonoseconds.
-LAPACK Running: 3321139705.000000 nonoseconds.
+N=2000
+MY Running: 35.791320 seconds.
+MY GFLOPS: 0.149012
+LAPACK Running: 3.304381 seconds.
+LAPACK GFLOPS: 1.614019
+err: 0.000000
 
-n = 3000
-MY Running: 65417925.000000 nonoseconds.
-LAPACK Running: 11404346154.000000 nonoseconds.
+N=3000
+MY Running: 120.963554 seconds.
+MY GFLOPS: 0.148805
+LAPACK Running: 11.505180 seconds.
+LAPACK GFLOPS: 1.564513
+err: 0.000000
 
-n = 4000
-MY Running: 116781677.000000 nonoseconds.
-LAPACK Running: 27204392489.000000 nonoseconds.
+N=4000
+MY Running: 281.802088 seconds.
+MY GFLOPS: 0.151406
+LAPACK Running: 26.969558 seconds.
+LAPACK GFLOPS: 1.582031
+err: 0.000000
 
-n = 5000
-MY Running: 183158075.000000 nonoseconds.
-LAPACK Running: 59666708067.000000 nonoseconds.
-
-=========================================
+N=5000
+MY Running: 576.526947 seconds.
+MY GFLOPS: 0.144544
+LAPACK Running: 63.687450 seconds.
+LAPACK GFLOPS: 1.308473
+Error = 324102.000000
+err: 0.000000
