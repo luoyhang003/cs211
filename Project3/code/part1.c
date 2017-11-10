@@ -31,8 +31,8 @@ int main(int argc, char* argv[]) {
 
 	n = atoi(argv[1]);
 	low_value = 3 + BLOCK_LOW(id, p, n-2) + BLOCK_LOW(id, p, n-2)%2;
-	high_value = 3 + BLOCK_HIGH(id, p, n-2) + BLOCK_HIGH(id, p, n-2)%2;
-	size = (high_value-low_value);
+	high_value = 3 + BLOCK_HIGH(id, p, n-2) - BLOCK_HIGH(id, p, n-2)%2;
+	size = (high_value-low_value)/2 + 1;
 	proc_0 = (n-2)/(p*2);
 	
 	if((3+proc_0)<(int)sqrt((double)n)) {
@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
 
 	do {
 		if(prime*prime > low_value) {
-			first = prime* prime - low_value;
+			first = (prime* prime - low_value)/2;
 		}else {
 			if(!(low_value%prime)) {
 				first = 0;
