@@ -1,4 +1,4 @@
-#include <mpi.h>
+#include "mpi.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,10 +7,12 @@
 #define MIN(a,b) ((a<b)?(a):(b))
 
 int main(int argc, char* argv[]) {
-	int i, n, low_value, high_value,proc_0, id, p, size, count, global_count;
+	int id, p;
+	unsigned long long int i, n, size, low_value, high_value, proc_0, prime, first;
+	unsigned long long int global_count;
 	double elapse_time;
 	char* marked;
-	int index, prime, first;	
+	int index, count;	
 
 	int success = MPI_Init(&argc, &argv);
 	if(success != MPI_SUCCESS) {
@@ -21,15 +23,15 @@ int main(int argc, char* argv[]) {
 	elapse_time = -MPI_Wtime();
 	MPI_Comm_rank(MPI_COMM_WORLD, &id);
 	MPI_Comm_size(MPI_COMM_WORLD, &p);
-	if(argc != 2) {
+	if(argc != 3) {
 		if(!id) {
-			printf("Command Line: %s\n", argv[0]);
+			printf("Please input correct command line parameters\n");
 		}
 		MPI_Finalize();
 		exit(1);
 	}
 
-	n = atoi(argv[1]);
+	n = atoll(argv[1]);
 	low_value = 3 + BLOCK_LOW(id, p, n-2) + BLOCK_LOW(id, p, n-2)%2;
 	high_value = 3 + BLOCK_HIGH(id, p, n-2) - BLOCK_HIGH(id, p, n-2)%2;
 	size = (high_value-low_value)/2 + 1;
@@ -102,8 +104,7 @@ int main(int argc, char* argv[]) {
 
 	if(!id) {
 		global_count++;
-		printf("%d primes are less than or equal to %d\n", global_count, n);
-		printf("Total elapsed time: %10.6f", elapse_time);
+		printf("The total number of prime: %llu, total time: %10.6f, total node %s\n", global_count, elapse_time, argv[2]);
 	}
 	MPI_Finalize();	
 	return 0;
