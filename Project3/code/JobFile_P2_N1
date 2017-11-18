@@ -1,5 +1,5 @@
 #PBS -l nodes=1:ppn=32,walltime=00:05:00
-#PBS -N PART1_NODE1
+#PBS -N PART2_NODE1
 #PBS -M yluo069@ucr.edu
 #PBS -m abe
 
@@ -10,6 +10,6 @@ JOB_PATH= .
 
 cd $JOB_PATH
 
-echo "=== Part 1 ===" >> result.txt
+echo "=== Part 2 ===" >> result.txt
 
-mpirun ./part1 10000000000 1 >> result.txt
+mpirun ./part2 10000000000 1 >> result.txt

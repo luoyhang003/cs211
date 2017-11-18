@@ -1,5 +1,5 @@
-#PBS -l nodes=4:ppn=32,walltime=00:05:00
-#PBS -N PART1_NODE4
+#PBS -l nodes=8:ppn=32,walltime=00:05:00
+#PBS -N PART3_NODE8
 #PBS -M yluo069@ucr.edu
 #PBS -m abe
 
@@ -10,4 +10,5 @@ JOB_PATH= .
 
 cd $JOB_PATH
 
-mpirun ./part1 10000000000 4 >> result.txt
+
+mpirun ./part3 10000000000 1 >> result.txt
