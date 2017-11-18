@@ -104,7 +104,7 @@ int main(int argc, char* argv[]) {
 
 	if(!id) {
 		global_count++;
-		printf("The total number of prime: %llu, total time: %10.6f, total node %s\n", global_count, elapse_time, argv[2]);
+		printf("The total number of prime:%llu, total time:%10.6f, total node%s\n", global_count, elapse_time, argv[2]);
 	}
 	MPI_Finalize();	
 	return 0;

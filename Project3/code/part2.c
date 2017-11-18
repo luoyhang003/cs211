@@ -3,18 +3,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include "MyMPI.h"
+
 #define MIN(a,b)  ((a)<(b)?(a):(b))
-
-// Defining Block Low, Block High and Block Size
-
-#define BLOCK_LOW(id, p, n) ((id)*(n)/(p))
-#define BLOCK_HIGH(id, p, n) (BLOCK_LOW((id)+1, p,n)-1)
-#define BLOCK_SIZE(id, p, n) (BLOCK_LOW((id)+1,p,n)-BLOCK_LOW((id),p,n))
-#define BLOCK_OWNER(index,p,n) ((((p) * index)+1)-1)/(n)
 
 int main(int argc, char *argv[])
 {
-    //int *arrA = (int*)calloc(pow(10,10),sizeof(int));
     double elapsed_time;
     int id, index,p,count, nodes;
     unsigned long long int n,k,low_value; 
@@ -22,9 +16,8 @@ int main(int argc, char *argv[])
     unsigned long long int i,prime,first;
     char *marked;
     unsigned long long int global_count;
-    unsigned long long int localLow,localHigh,localSize,localFirst;
+    unsigned long long int local_low,local_high,local_size,local_first;
     char *localMarked;
-    //variable declaration
 
     nodes = atoi(argv[2]);
     MPI_Init(&argc, &argv);
@@ -36,25 +29,26 @@ int main(int argc, char *argv[])
           if (!id) printf ("Command line: %s <m>\n", argv[0]);
           MPI_Finalize(); exit(1);
     }
+    
     n = atoll(argv[1]);
     low_value = 3 + BLOCK_LOW(id,p,n-2) + BLOCK_LOW(id,p,n-2) % 2;
     high_value = 3 + BLOCK_HIGH(id,p,n-2) - BLOCK_HIGH(id,p,n-2) % 2;
     size = (high_value - low_value) / 2 + 1;
     proc0_size = ((n-2)/(2*p));
 
-    localLow = 3;
-    localHigh = 3 + BLOCK_HIGH(0,p,n-2) - BLOCK_HIGH(0,p,n-2) % 2;
-    localSize = (localHigh - localLow) / 2 + 1;
-    localMarked = (char*)malloc(localSize);
+    local_low = 3;
+    local_high = 3 + BLOCK_HIGH(0,p,n-2) - BLOCK_HIGH(0,p,n-2) % 2;
+    local_size = (local_high - local_low) / 2 + 1;
+    localMarked = (char*)malloc(local_size);
 
-    localMarked = (char *) malloc (localSize);
+    localMarked = (char *) malloc (local_size);
     if (localMarked == NULL) {
         printf("Cannot allocate memory to local array for seiving primes\n");
         MPI_Finalize();
         exit(1);
     }
 
-    for(k=0;k<localSize;k++){
+    for(k=0;k<local_size;k++){
         localMarked[k] = 0;
     }
 
@@ -105,8 +99,8 @@ int main(int argc, char *argv[])
         //if(p>1)
             //MPI_Bcast(&prime,  1, MPI_INT, 0, MPI_COMM_WORLD);
         if(id){
-            localFirst = (prime * prime - localLow)/2;
-            for(k=localFirst;k<localSize;k+=prime){
+            local_first = (prime * prime - local_low)/2;
+            for(k=local_first;k<local_size;k+=prime){
                 localMarked[k] = 1;
             }
             while(localMarked[++index]);
@@ -125,7 +119,7 @@ int main(int argc, char *argv[])
     elapsed_time += MPI_Wtime();
     if (!id) {
         global_count++;
-        printf("Total number of primes: %llu, Total time: %10.6f sec, Total nodes: %d\n",global_count,elapsed_time,nodes);
+        printf("The total number of prime:%llu, total time:%10.6f sec,total nodes:%d\n",global_count,elapsed_time,nodes);
         // printf ("Total elapsed time: %10.6f\n", elapsed_time);
     }
     MPI_Finalize();
