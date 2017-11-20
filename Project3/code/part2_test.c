@@ -50,7 +50,7 @@ int main(int argc, char* argv[]) {
                 exit(1);
         }
 
-        local_size = sqrt(n);
+        local_size = sqrt(n)+1;
 
         local_marked = (char*)malloc(local_size);
 
