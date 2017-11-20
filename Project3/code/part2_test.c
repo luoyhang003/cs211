@@ -8,7 +8,9 @@
 
 int main(int argc, char* argv[]) {
         int id, p;
-        unsigned long long int i, n, size, low_value, high_value, proc_0, prime, first;
+        unsigned long long int i, n, k;
+        unsigned long long int size, low_value, high_value;
+        unsigned long long int proc_0, prime, first;
         unsigned long long int global_count;
         double elapse_time;
         char* marked;
@@ -48,7 +50,7 @@ int main(int argc, char* argv[]) {
                 exit(1);
         }
 
-        int local_size = sqrt(n);
+        local_size = sqrt(n);
 
         local_marked = (char*)malloc(local_size);
 
@@ -69,7 +71,7 @@ int main(int argc, char* argv[]) {
 
         unsigned long long int count_temp = 0;
         for(i = 2; i<local_size; i++) {
-                if(!localMarked[i]) {
+                if(!local_marked[i]) {
                         count_temp++;
                 }
         }
