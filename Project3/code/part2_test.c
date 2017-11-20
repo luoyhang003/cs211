@@ -14,7 +14,8 @@ int main(int argc, char* argv[]) {
         unsigned long long int global_count;
         double elapse_time;
         char* marked;
-        int index, count;
+        unsigned long long int index;
+	int count;
 
         unsigned long long int local_size;
         char* local_marked;
@@ -28,6 +29,9 @@ int main(int argc, char* argv[]) {
         elapse_time = -MPI_Wtime();
         MPI_Comm_rank(MPI_COMM_WORLD, &id);
         MPI_Comm_size(MPI_COMM_WORLD, &p);
+
+	global_count = 0;
+
         if(argc != 3) {
                 if(!id) {
                         printf("Please input correct command line parameters\n");
@@ -127,11 +131,14 @@ int main(int argc, char* argv[]) {
 
         count = 0;
 
+
         for(i=0; i<size; i++) {
                 if(!marked[i]) {
                         count++;
                 }
         }
+
+	printf("My count is: %llu\n", count);
         if(p>1) {
                 MPI_Reduce(&count, &global_count, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
         }
