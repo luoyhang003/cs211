@@ -33,12 +33,12 @@ int main(int argc, char *argv[])
     n = atoll(argv[1]);
     low_value = 3 + BLOCK_LOW(id,p,n-2) + BLOCK_LOW(id,p,n-2) % 2;
     high_value = 3 + BLOCK_HIGH(id,p,n-2) - BLOCK_HIGH(id,p,n-2) % 2;
-    size = sqrt(high_value - low_value);
+    size = (high_value - low_value) / 2 + 1;
     proc0_size = ((n-2)/(2*p));
 
     local_low = 3;
     local_high = 3 + BLOCK_HIGH(0,p,n-2) - BLOCK_HIGH(0,p,n-2) % 2;
-    local_size = (local_high - local_low) / 2 + 1;
+    local_size = sqrt(local_high - local_low);
     localMarked = (char*)malloc(local_size);
 
     localMarked = (char *) malloc (local_size);
