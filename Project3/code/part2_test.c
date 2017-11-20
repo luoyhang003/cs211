@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 {
     double elapsed_time;
     int id, index,p,count, nodes;
-    unsigned long long int n,k,low_value; 
+    unsigned long long int n,k,low_value;
     unsigned long long int high_value, size, proc0_size;
     unsigned long long int i,prime,first;
     char *marked;
@@ -29,11 +29,11 @@ int main(int argc, char *argv[])
           if (!id) printf ("Command line: %s <m>\n", argv[0]);
           MPI_Finalize(); exit(1);
     }
-    
+
     n = atoll(argv[1]);
     low_value = 3 + BLOCK_LOW(id,p,n-2) + BLOCK_LOW(id,p,n-2) % 2;
     high_value = 3 + BLOCK_HIGH(id,p,n-2) - BLOCK_HIGH(id,p,n-2) % 2;
-    size = (high_value - low_value) / 2 + 1;
+    size = sqrt(high_value - low_value);
     proc0_size = ((n-2)/(2*p));
 
     local_low = 3;
