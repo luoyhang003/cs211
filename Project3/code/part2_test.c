@@ -63,10 +63,10 @@ int main(int argc, char* argv[]) {
         do {
                 for(i=k*k; i<local_size; i++) {
                         if(i % k == 0) {
-                                localMarked[i] = 1;
+                                local_marked[i] = 1;
                         }
                 }
-                while(localMarked[++k]) ;
+                while(local_marked[++k]) ;
         } while(k*k <= local_size);
 
         unsigned long long int count_temp = 0;
