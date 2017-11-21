@@ -99,13 +99,13 @@ int main(int argc, char* argv[]) {
         }
 
 
-        unsigned long int cache_size = 1024 * pow(2, nodes);
+        unsigned long long int cache_size = 1024 * pow(2, nodes);
         unsigned long long int cache_low_value = low_value;
         unsigned long long int cache_high_value = cache_low_value + 2 * (cache_size - 1);
 
 
         do {
-                index = 0;
+                index = 2;
                 prime = 3;
                 while (prime * prime <= cache_high_value) {
                         if (prime * prime > cache_low_value)
