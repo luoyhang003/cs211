@@ -16,6 +16,8 @@ int main(int argc, char* argv[]) {
         char* marked;
         unsigned long long int index;
 	int count;
+	
+	int nodes = argv[2];
 
         unsigned long long int local_size;
         char* local_marked;
