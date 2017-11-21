@@ -101,34 +101,47 @@ int main(int argc, char* argv[]) {
 
 
         prime = 3;
+	
+	if(prime*prime > low_value) {
+        	first = (prime* prime - low_value)/2;
+	}else {
+        	if(!(low_value%prime)) {
+                	first = 0;
+        	} else {
+                	if((low_value%prime)%2 == 0) {
+                        	first = prime - (low_value%prime)/2;
+                	}
+                	else {
+                        	first = (prime - (low_value%prime))/2;
+                	}
+        	}
+	}
 
-        do {
-                if(prime*prime > low_value) {
-                        first = (prime* prime - low_value)/2;
-                }else {
-                        if(!(low_value%prime)) {
-                                first = 0;
-                        } else {
-                                if((low_value%prime)%2 == 0) {
-                                        first = prime - (low_value%prime)/2;
-                                }
-                                else {
-                                        first = (prime - (low_value%prime))/2;
-                                }
-                        }
-                }
-                for(i=first; i<size; i+=prime) {
-                        marked[i] = 1;
-                }
+	for(i = first; i < size; i+=prime) {
+        	do {
+                	marked[i] = 1;
 
-                while(local_marked[++index]) ;
-                prime = index;
-                //if(!id) {
-                //        printf("Prime: %llu\n", prime);
-                //}
+                	if(prime*prime > low_value) {
+                        	first = (prime* prime - low_value)/2;
+                	}else {
+                        	if(!(low_value%prime)) {
+                                	first = 0;
+                        	} else {
+                                	if((low_value%prime)%2 == 0) {
+                                        	first = prime - (low_value%prime)/2;
+                                	}
+                                	else {
+                                        	first = (prime - (low_value%prime))/2;
+                                	}
+                        	}
+                	}
 
-        } while(prime*prime<=n);
+                	while(local_marked[++index]) ;
+                	prime = index;
 
+        	} while(prime*prime<=n);
+	}
+}
         count = 0;
 
 
