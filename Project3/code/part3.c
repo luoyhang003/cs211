@@ -97,50 +97,37 @@ int main(int argc, char* argv[]) {
         }
 
 
-        index = 2;
+        unsigned long int cache_size = 1024 * pow(2, nodes);
+        unsigned long long int cache_low_value = low_value;
+        unsigned long long int cache_high_value = cache_low_value + 2 * (cache_size - 1);
 
 
-        prime = 3;
-	
-	if(prime*prime > low_value) {
-        	first = (prime* prime - low_value)/2;
-	}else {
-        	if(!(low_value%prime)) {
-                	first = 0;
-        	} else {
-                	if((low_value%prime)%2 == 0) {
-                        	first = prime - (low_value%prime)/2;
-                	}
-                	else {
-                        	first = (prime - (low_value%prime))/2;
-                	}
-        	}
-	}
+        do {
+                index = 0;
+                prime = 3;
+                while (prime * prime <= cache_high_value) {
+                        if (prime * prime > cache_low_value)
+                                first = (prime * prime - cache_low_value) / 2;
+                        else {
+                                if (!(cache_low_value % prime)) first = 0;
+                                else first = (prime - cache_low_value % prime + cache_low_value / prime % 2 * prime) / 2;
+                        }
 
-	for(i = first; i < size; i+=prime) {
-        	do {
-                	marked[i] = 1;
+                        for (i = first + (cache_low_value - low_value) / 2; i <= (cache_high_value - low_value) / 2; i += prime) {
+                                marked[i] = 1;
+                        }
+                        while (local_marked[++index]) ;
+                        prime = 2 + index;
 
-                	if(prime*prime > low_value) {
-                        	first = (prime* prime - low_value)/2;
-                	}else {
-                        	if(!(low_value%prime)) {
-                                	first = 0;
-                        	} else {
-                                	if((low_value%prime)%2 == 0) {
-                                        	first = prime - (low_value%prime)/2;
-                                	}
-                                	else {
-                                        	first = (prime - (low_value%prime))/2;
-                                	}
-                        	}
-                	}
+                }
+                cache_low_value = cache_high_value + 2;
+                cache_high_value = cache_low_value + 2 * (cache_size - 1);
+                if(cache_high_value > high_value) {
+                        cache_high_value = high_value;
+                }
 
-                	while(local_marked[++index]) ;
-                	prime = index;
 
-        	} while(prime*prime<=n);
-	}
+        } while (cache_low_value <= high_value);
 
         count = 0;
 
