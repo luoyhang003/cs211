@@ -11,7 +11,7 @@ int main(int argc, char* argv[]) {
         unsigned long long int i, n, k;
         unsigned long long int size, low_value, high_value;
         unsigned long long int proc_0, prime, first;
-        unsigned long long int global_count;
+        unsigned long long int global_count = 0;
         double elapse_time;
         char* marked;
         unsigned long long int index;
@@ -32,7 +32,6 @@ int main(int argc, char* argv[]) {
         MPI_Comm_rank(MPI_COMM_WORLD, &id);
         MPI_Comm_size(MPI_COMM_WORLD, &p);
 
-	global_count = 0;
 
         if(argc != 3) {
                 if(!id) {
@@ -59,7 +58,7 @@ int main(int argc, char* argv[]) {
                 exit(1);
         }
 
-        local_size = sqrt(n)+1;
+        local_size = sqrt(n)-1;
 
         local_marked = (char*)malloc(local_size);
 
@@ -102,7 +101,7 @@ int main(int argc, char* argv[]) {
         }
 
 
-        unsigned long long int cache_size = 1024 * pow(2, nodes);
+        unsigned long long int cache_size = 1048576;
         unsigned long long int cache_low_value = low_value;
         unsigned long long int cache_high_value = cache_low_value + 2 * (cache_size - 1);
 
