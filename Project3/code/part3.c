@@ -108,14 +108,19 @@ int main(int argc, char* argv[]) {
 
 
         do {
-                index = 2;
+                index = 0;
                 prime = 3;
                 while (prime * prime <= cache_high_value) {
-                        if (prime * prime > cache_low_value)
+                        if (prime * prime > cache_low_value) {
                                 first = (prime * prime - cache_low_value) / 2;
+			}
                         else {
-                                if (!(cache_low_value % prime)) first = 0;
-                                else first = (prime - cache_low_value % prime + cache_low_value / prime % 2 * prime) / 2;
+                                if (!(cache_low_value % prime)) {
+					first = 0;
+				}
+                                else {
+					first = (prime - cache_low_value % prime + cache_low_value / prime % 2 * prime) / 2;
+				}
                         }
 
                         for (i = first + (cache_low_value - low_value) / 2; i <= (cache_high_value - low_value) / 2; i += prime) {
