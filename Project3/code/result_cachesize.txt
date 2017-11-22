@@ -1,0 +1,10 @@
+The total number of prime:455052512, total time: 56.642320, total node1, with cache size: 4096.
+The total number of prime:455052512, total time: 31.205423, total node1, with cache size: 8192.
+The total number of prime:455052512, total time: 18.438662, total node1, with cache size: 16384.
+The total number of prime:455052512, total time: 12.123553, total node1, with cache size: 32768.
+The total number of prime:455052512, total time:  9.074643, total node1, with cache size: 65536.
+The total number of prime:455052512, total time:  7.605630, total node1, with cache size: 131072.
+The total number of prime:455052512, total time:  6.775248, total node1, with cache size: 262144.
+The total number of prime:455052512, total time:  6.475376, total node1, with cache size: 524288.
+The total number of prime:455052512, total time:  6.378394, total node1, with cache size: 1048576.
+The total number of prime:455052512, total time:  7.481595, total node1, with cache size: 2097152.

@@ -1,0 +1,16 @@
+=== Project 3 ===
+=== Part 1 ===
+The total number of prime:455052511, total time: 16.524263, total node1
+The total number of prime:455052511, total time:  8.723452, total node2
+The total number of prime:455052511, total time:  7.181070, total node4
+The total number of prime:455052511, total time:  3.490537, total node8
+=== Part 2 ===
+The total number of prime:455052511, total time: 15.916358, total node1
+The total number of prime:455052511, total time:  8.007149, total node2
+The total number of prime:455052511, total time:  6.997060, total node4
+The total number of prime:455052511, total time:  3.428442, total node8
+=== Part 3 ===
+The total number of prime:455052512, total time:  6.679128, total node1
+The total number of prime:455052512, total time:  3.361577, total node2
+The total number of prime:455052512, total time:  2.604060, total node4
+The total number of prime:455052512, total time:  0.858657, total node8

@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
         MPI_Comm_size(MPI_COMM_WORLD, &p);
 
 	global_count = 0;
-
+	
         if(argc != 3) {
                 if(!id) {
                         printf("Please input correct command line parameters\n");
@@ -130,14 +130,14 @@ int main(int argc, char* argv[]) {
         } while(prime*prime<=n);
 
         count = 0;
-
+	
 
         for(i=0; i<size; i++) {
                 if(!marked[i]) {
                         count++;
                 }
         }
-
+	
 	printf("My count is: %llu\n", count);
         if(p>1) {
                 MPI_Reduce(&count, &global_count, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
