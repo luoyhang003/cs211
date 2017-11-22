@@ -1,0 +1,15 @@
+#PBS -l nodes=1:ppn=32,walltime=00:05:00
+#PBS -N PART3_NODE1
+#PBS -M yluo069@ucr.edu
+#PBS -m abe
+
+module load gcc-4.6.2
+module load mvapich2-1.9a2/gnu-4.6.2
+
+JOB_PATH= /home/kaimo901/test/yluo069
+
+cd $JOB_PATH
+
+echo "=== Part 3 ===" >> results
+
+mpirun ./part3 10000000000 1 >> results
