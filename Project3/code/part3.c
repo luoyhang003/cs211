@@ -7,25 +7,25 @@
 #define MIN(a,b) ((a<b) ? (a) : (b))
 
 int main(int argc, char* argv[]) {
-        unsigned long int count;
-        double elapsed_time;
-        unsigned long int first;
+        unsigned long long int count;
+        double elapse_time;
+        unsigned long long int first;
         int local_first;
-        unsigned long int global_count = 0; /* Global prime count */
-        unsigned long long int high_value; /* Highest value on this proc */
-        unsigned long int i;
-        int id;         /* Process ID number */
-        unsigned long int index;      /* Index of current prime */
-        unsigned long long int low_value;  /* Lowest value on this proc */
-        char  *marked;  /* Portion of 2,...,'n' */
-        char  *local_prime_marked;
-        unsigned long long int n;          /* Sieving from 2, ..., 'n' */
-        int p;          /* Number of processes */
-        unsigned long int proc0_size; /* Size of proc 0's subarray */
-        unsigned long int prime;
-        unsigned long int local_prime;    /* Current prime */
-        unsigned long int size;       /* Elements in 'marked' */
-        unsigned long int local_prime_size;
+        unsigned long int global_count = 0;
+        unsigned long long int high_value;
+        unsigned long long int i;
+        int id;
+        unsigned long long int index;
+        unsigned long long int low_value;
+        char  *marked;
+        char  *local_marked;
+        unsigned long long int n;
+        int p;
+        unsigned long int proc0_size;
+        unsigned long long int prime;
+        unsigned long long int local_prime;
+        unsigned long long int size;
+        unsigned long long int local_prime_size;
 
         int success = MPI_Init(&argc, &argv);
         if(success != MPI_SUCCESS) {
@@ -48,45 +48,55 @@ int main(int argc, char* argv[]) {
 
         n = atoll(argv[1]);
 
-        /* Figure out this process's share of the array, as
-           well as the integers represented by the first and
-           last array elements */
 
-        low_value = 2 + id*(n-1)/p;
-        low_value = low_value + (low_value + 1) % 2;
-        high_value = 1 + (id+1)*(n-1)/p;
-        high_value = high_value - (high_value + 1) % 2;
+
+        low_value = BLOCK_LOW(id, p, (n-1)) + 2 + (BLOCK_LOW(id, p, (n-1)) + 3) % 2;
+        high_value = BLOCK_HIGH(id, p, (n-1)) + 2 - (BLOCK_HIGH(id, p, (n-1)) + 3) % 2;
+
+
+        // low_value = 2 + id*(n-1)/p;
+        // low_value = low_value + (low_value + 1) % 2;
+        // high_value = 1 + (id+1)*(n-1)/p;
+        // high_value = high_value - (high_value + 1) % 2;
         size = (high_value - low_value) / 2 + 1;
         local_prime_size  = (int)sqrt((double)(n)) - 1;
 
         proc0_size = (n/2-1)/p;
 
         if ((2 + proc0_size) < (int) sqrt((double) n/2)) {
-                if (!id) printf ("Too many processes\n");
+                if (!id) {
+                        printf ("Too many processes\n");
+                }
                 MPI_Finalize();
                 exit (1);
         }
 
 
         marked = (char *) malloc (size);
-        local_prime_marked = (char *) malloc (local_prime_size);
+        local_marked = (char *) malloc (local_prime_size);
 
-        if (marked == NULL || local_prime_marked == NULL) {
+        if (marked == NULL || local_marked == NULL) {
                 printf ("Cannot allocate enough memory\n");
                 MPI_Finalize();
                 exit (1);
         }
         local_prime = 2;
-        for (i = 0; i < local_prime_size; i++) local_prime_marked[i] = 0;
+        for (i = 0; i < local_prime_size; i++) {
+                local_marked[i] = 0;
+        }
         index = 0;
         do {
                 local_first = local_prime * local_prime - 2;
-                for (i=local_first; i < local_prime_size; i += local_prime) local_prime_marked[i] = 1;
-                while (local_prime_marked[++index]) ;
+                for (i=local_first; i < local_prime_size; i += local_prime) {
+                        local_marked[i] = 1;
+                }
+                while (local_marked[++index]) ;
                 local_prime = 2 + index;
         } while (local_prime * local_prime <= n);
 
-        for (i = 0; i < size; i++) marked[i] = 0;
+        for (i = 0; i < size; i++) {
+                marked[i] = 0;
+        }
 
         // unsigned long long int count_temp = 0;
         // for(i = 2; i<local_size; i++) {
@@ -99,32 +109,43 @@ int main(int argc, char* argv[]) {
 
 
         unsigned long int block_size = 1048576;
-        unsigned long long int block_low_value = low_value;
-        unsigned long long int block_high_value = block_low_value + 2 * (block_size - 1);
-        //unsigned long long int block_high_value = high_value;
+        unsigned long long int cache_low_value = low_value;
+        unsigned long long int cache_high_value = cache_low_value + 2 * (block_size - 1);
+        //unsigned long long int cache_high_value = high_value;
         do {
                 index = 0;
                 prime = 3;
-                while (prime * prime <= block_high_value) {
-                        if (prime * prime > block_low_value)
-                                first = (prime * prime - block_low_value) / 2;
+                while (prime * prime <= cache_high_value) {
+                        if (prime * prime > cache_low_value) {
+                                first = (prime * prime - cache_low_value) / 2;
+                        }
                         else {
-                                if (!(block_low_value % prime)) first = 0;
-                                else first = (prime - block_low_value % prime + block_low_value / prime % 2 * prime) / 2;
+                                if (!(cache_low_value % prime)) {
+                                        first = 0;
+                                }
+                                else {
+                                        first = (prime - cache_low_value % prime + cache_low_value / prime % 2 * prime) / 2;
+                                }
                         }
 
-                        for (i = first + (block_low_value - low_value) / 2; i <= (block_high_value - low_value) / 2; i += prime) marked[i] = 1;
-                        while (local_prime_marked[++index]) ;
+                        for (i = first + (cache_low_value - low_value) / 2;
+                             i <= (cache_high_value - low_value) / 2;
+                             i += prime) {
+                                marked[i] = 1;
+                        }
+                        while (local_marked[++index]) ;
                         prime = 2 + index;
 
                 }
-                block_low_value = block_high_value + 2;
-                block_high_value = block_low_value + 2 * (block_size - 1);
-                if(block_high_value > high_value) block_high_value = high_value;
+                cache_low_value = cache_high_value + 2;
+                cache_high_value = cache_low_value + 2 * (block_size - 1);
+                if(cache_high_value > high_value) {
+                        cache_high_value = high_value;
+                }
 
 
 
-        } while (block_low_value <= high_value);
+        } while (cache_low_value <= high_value);
         count = 0;
 
 
