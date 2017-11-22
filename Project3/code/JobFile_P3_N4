@@ -6,7 +6,7 @@
 module load gcc-4.6.2
 module load mvapich2-1.9a2/gnu-4.6.2
 
-JOB_PATH= .
+JOB_PATH= /home/kaimo901/test/yluo069
 
 cd $JOB_PATH
 
