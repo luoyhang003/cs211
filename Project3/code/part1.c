@@ -70,12 +70,7 @@ int main(int argc, char* argv[]) {
 			if(!(low_value%prime)) {
 				first = 0;
 			} else {
-				if((low_value%prime)%2 == 0) {
-					first = prime - (low_value%prime)/2;
-				}
-				else {
-					first = (prime - (low_value%prime))/2;
-				}
+				first = (prime - low_value % prime + low_value / prime % 2 * prime) / 2;
 			}
 		}
 		for(i=first; i<size; i+=prime) {
