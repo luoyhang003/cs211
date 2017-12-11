@@ -2,7 +2,7 @@
 #PBS -N HPC3_TEST
 #PBS -M yluo069@ucr.edu
 #PBS -m abe
-
+#?streamname=live_11487603_2737999&key=359819d08e7f4c353d51cebcc7db8efc
 module load gcc-4.6.2
 module load mvapich2-1.9a2/gnu-4.6.2
 
